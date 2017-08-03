@@ -1,0 +1,275 @@
+﻿@using ImpotsTaxes.Models;
+@try
+{
+    ViewBag.Title = "note";
+    Assessment notePerc = new Assessment();
+    notePerc = ViewBag.note;
+ 
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Note de perception</title>
+            <meta charset="utf-8" />
+            <link type="text/css" rel="stylesheet" href="../../Content/design.css" />
+            <link type="text/css" rel="stylesheet" href="../../Content/designComposant.css" />
+            <script type="text/javascript">
+                var clignotement = function () {
+                    if (document.getElementById('DivClignotante').style.visibility == 'visible') {
+                        document.getElementById('DivClignotante').style.visibility = 'hidden';
+                    }
+                    else {
+                        document.getElementById('DivClignotante').style.visibility = 'visible';
+                    }
+                };
+
+                // mise en place de l appel de la fonction toutes les 0.8 secondes
+                // Pour arrêter le clignotement : clearInterval(periode);
+                periode = setInterval(clignotement, 800);
+            </script>
+
+            <script type="text/css">
+                input
+                {
+                    width:3000px;
+                }
+            </script>
+        </head>
+
+        <body >
+
+            <div>
+            
+            </div>
+
+            <div class="bgim" style="margin:auto;width:950px">           
+                <br /><br />
+                <h2 style="text-align:center;">REPUBLIQUE DEMOCRATIQUE DU CONGO<br/>
+                MINISTRERE PROVINCIAL DES FINANCES</h2>
+        
+                <br />
+            <div style="margin-left:50px;">
+                PROVINCE DU NORD-KIVU
+                <table>
+                    <tr>
+                        <td>SERVICE ou ENTITE FISCAL:</td> 
+                        <td class="filltext">
+                            <select>
+                                <option>@notePerc.entity_name</option>
+                            </select>
+                        </td>
+                        <td>DATE:</td>                        
+                        <td class="filltext"><input type="text" value="@notePerc.assessment_date" /> </td>
+                    </tr>
+                    <tr>
+                        <td>Entete P/C:</td>
+                        <td class="filltext">
+                            <select>
+                                <option>@notePerc.entity_name</option>
+                            </select>
+                        <td>No:</td>
+                        <td class="filltext">@notePerc.assessment_id</td>
+                    </tr>
+                </table>
+               
+            </div>
+            
+                <br /><br />    
+                <fieldset>
+                <legend>NOTE DE PERCEPTION</legend>                
+                
+                    <fieldset>
+                        <legend>TAXATION</legend>
+                                        
+                        <table>
+                        
+                        <tr>
+                            <td>- Note de debit ou de taxation Num:</td>
+                            <td class="filltext"><input type="text" value="@notePerc.taxation_base" style="width:150px;" /> N°:<input type="text" value="@notePerc.taxation_base_id" style="width:150px;" /></td>
+                            <td> Nom ou raison sociale:</td>
+                            <td class="filltext">@notePerc.taxpayer_name</td>
+                        </tr>
+
+                        <tr>
+                            <td>- Acte generateur(libelle):</td>
+                            <td class="filltext"><input type="text" value="@notePerc.tax_name" style="width:400px;" /></td>
+                            <td>P/C:</td>
+                            <td><Textarea></Textarea></td>
+                        </tr>
+
+                        <tr>
+                            <td>- Article budgetaire:</td>
+                            <td class="filltext"><input type="text" value="@notePerc.tax_id" style="width:150px;" /><a href="#">Modifier l'article</a></td>
+                            <td>Ville:</td>
+                            <td class="filltext">@notePerc.adresse.town_dist</td>
+                        </tr> 
+                               
+                        <tr>
+                            <td>Nombre de pieces justificatives:</td>
+                            <td></td>
+                            <td>Commune:</td>
+                            <td class="filltext">@notePerc.adresse.commune</td>
+                        </tr>
+
+                        <tr>
+                            <td>- Taux et reference du texte:</td>
+                            <td class="filltext"><input type="text" value="@notePerc.text_reference" style="width:400px;" /></td>
+                            <td>Quartier:</td>
+                            <td class="filltext">@notePerc.adresse.quarter_sect</td>
+                        </tr>
+
+                        <tr>
+                            <td>- Montant à payer:-en chiffres:</td>
+                            <td class="filltext"><input type="text" value="@notePerc.amount @notePerc.currency" style="width:150px;" /></td>
+                            <td>Avenue:</td>
+                            <td class="filltext">@notePerc.adresse.avenue_loc</td>
+                        </tr>
+
+                        <tr>
+                            <td>- En lettres:</td>
+                            <td><Textarea></Textarea></td>
+                            <td>Num:</td>
+                            <td class="filltext">@notePerc.adresse.number</td>
+                        </tr>
+
+                        <tr>
+                            <td>Nom de l'agent taxateur:</td>
+                            <td class="filltext"><input type="text" value="@notePerc.taxman_name" style="width:400px;" /></td>
+                            <td>B.P:</td>
+                            <td class="filltext">@notePerc.taxPayer.p_o_box</td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>Tel:</td>
+                            <td class="filltext">@notePerc.taxPayer.telephone</td>
+                        </tr>
+
+                        <tr>
+                            <td>IdOrdonnateur:</td>
+                            <td class="filltext"><input type="text" value=" " style="width:150px;" /><a href="#">Rechercher</a></td>
+                            <td>E-mail:</td>
+                            <td class="filltext">@notePerc.taxPayer.email</td>
+                            <textArea></textArea>
+                        </tr>
+                    </table>
+                </fieldset>
+
+                <fieldset>
+                    <legend>ORDONNANCEMENT</legend>
+                    <table> 
+                        <tr>
+                        <td>Date d'ordonnancement</td>
+                        <td class="filltext"><input type="text" value="@notePerc.validation_date" style="width:400px;" /></td>
+                        </tr>
+
+	                <tr>
+                        <td>Avis motivé de l'ordonnateur</td>
+	                    <td class="filltext"><input type="text" value="@notePerc.notice" style="width:400px;" /></td>
+	                </tr>
+
+	                <tr>
+                        <td>Montant en chiffre</td>
+		                <td class="filltext"><input type="text" value="@notePerc.amount_validation" style="width:150px;" /> <input type="text" value="@notePerc.currency_validation" style="width:100px;" /></td>
+	                </tr>
+				
+				    <tr>
+                        <td>Montant en lettre</td>
+					   SIWA1234
+				    </tr>
+                        <tr>
+                        <td>Ordonnateur</td>
+					    <td class="filltext"><input type="text" value="@notePerc.validator_name" style="width:400px;" /></td>
+				    </tr>	             
+                    </table> 
+                </fieldset>  
+            
+                @{
+                    string date_apurement;
+                    string date_bordereau;
+                    double montant_paiement;
+                    string msg_apurement;
+                    if (notePerc.amount_payment==0)
+                    {
+                        date_apurement = "";
+                        date_bordereau = "";
+                        montant_paiement = 0;
+                        msg_apurement = "NON PAYEE OU NON APUREE";                    
+                    }
+                    else
+                    {
+                        date_apurement = notePerc.payment_date;
+                        date_bordereau = notePerc.receipt_date;
+                        montant_paiement = notePerc.amount_payment;
+                        msg_apurement = "PAYEE";  
+                    }
+                }
+
+                <div id="DivClignotante" style="visibility:visible;">
+                    <h3 style="text-align:center;color:red;">@msg_apurement</h3>
+                </div>
+
+                <fieldset>
+                    <legend>APUREMENT</legend>
+                  <table> 
+                        <tr>
+                            <td>Date d'apurement</td>
+                            <td class="filltext"><input type="text" value="@date_apurement" style="width:400px;" /></td>
+                        </tr>
+
+	                    <tr>
+                            <td>Banque</td>
+	                        <td class="filltext"><input type="text" value="@notePerc.bank" style="width:400px;" /></td>
+	                     </tr>
+
+	                     <tr>
+                             <td>Numero du Bordereau</td>
+	                         <td class="filltext"><input type="text" value="@notePerc.receipt_number" style="width:400px;" /></td>
+	                     </tr>
+
+                        <tr>
+                             <td>Date</td>
+	                         <td class="filltext"><input type="text" value="@date_bordereau" style="width:400px;" /></td>
+	                     </tr>
+
+	                    <tr>
+                            <td>Montant</td>
+		                    <td class="filltext"><input type="text" value="@montant_paiement" style="width:150px;" /></td>
+	                    </tr>
+
+				        <tr>
+                            <td>Monnaie</td>
+					        <td class="filltext"><input type="text" value="@notePerc.currency_payment" style="width:150px;" /></td>
+				        </tr>
+
+				        <tr>
+                            <td>Montant en lettre</td>
+					        <td><Textarea></Textarea></td>
+				        </tr>
+                  
+                        <tr>
+                            <td>Comptable</td>
+					        <td class="filltext"><input type="text" value="@notePerc.discharger" style="width:200px;" /></td>
+                            <td>IdComptable:</td>
+                            <td class="filltext"><input type="text" value=" " style="width:150px;" /><a href="#">Rechercher</a></td>
+				        </tr>	             
+                     </table>
+                    </fieldset>
+
+                    <div style="text-align:center">
+                        <input type="submit" value="Migrer" name="Migrer" class="bouton"/>
+                        <a href="#" class="bouton">Doublon</a>
+                        <a href="#" class="bouton">A Elaguer</a>
+                    </div>
+
+                </fieldset>
+                <br /><br />
+            </div> 
+
+        </body>
+    </html>
+}
+catch(Exception ex)
+{
+    <p style="color:red; text-align:center;">@ex.Message</p>
+}
