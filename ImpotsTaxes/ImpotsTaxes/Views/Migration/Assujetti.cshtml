@@ -1,0 +1,62 @@
+﻿@using ImpotsTaxes.Models;
+@{
+    Layout = null;
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Assujetti</title>
+    <link rel="stylesheet" type="text/css" href="../Content/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="../Content/bootstrap/js/jquery-3.2.1.slim.min.js"></script>
+	<script type="text/javascript" src="../Content/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Content/Style.css">
+</head>
+<body>
+    @try
+    {
+	<div class="row">
+		<div class="col-xs-12">
+             <h3 class="text-center">SELECTIONNEZ L'ASSUJETTI A MIGRER</h3>
+			 <table class="table table-bordered" id="tbl">
+				 <tr>
+                   <th>N°</th>
+                   <th>N° Impôt</th>
+                   <th>NOM OU RAISON SOCIALE</th>
+                   <th>SIGLE</th>
+                   <th style="width:20px;">TELEPHONE</th>
+                   <th style="width:20px;">Email</th>                   
+                   <th>AVENUE</th>
+                   <th>NUMERO</th>
+                   <th>QUARTIER</th>
+                   <th>VILLE</th>
+
+                   @*@{Liste assujetti=new Liste();}*@
+                   @foreach(Person ass in ViewBag.Assujetti)
+                   
+                   {
+                      <tr style="font-size:1em">
+                          <td class="td" >@ass.nbre</td>
+                          <td class="td" >@ass.Id_person</td>
+                          <td class="td" ><a href="/Migration/SelectionAssujetti?idPersAS=@ass.Id_person&nom=@ass.name_company&tel=@ass.telephone&ville=@ass.town_dist&quartier=@ass.quarter&avenue=@ass.avenue&numero=@ass.number">@ass.name_company</a></td>
+                          <td class="td" >@ass.initials</td>
+                          <td class="td" >@ass.telephone</td>
+                          <td class="td" >@ass.email</td>
+                          <td class="td" >@ass.avenue</td>
+                          <td class="td" >@ass.number</td>  
+                          <td class="td" >@ass.quarter</td> 
+                          <td class="td" >@ass.town_dist</td>                                                     
+                      </tr>
+                     }				
+			    </table>
+            </div>
+        </div>
+    }
+    catch (Exception ex)
+    {
+        <script type="text/javascript">alert('@ex.Message');</script>
+    }
+</body>
+</html>
