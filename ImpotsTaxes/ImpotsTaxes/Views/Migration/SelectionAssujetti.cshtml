@@ -1,0 +1,74 @@
+﻿@using ImpotsTaxes.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>SelectionAssujetti</title>
+</head>
+<body>
+    @try
+    {
+        <div>
+            <fieldset>
+                <legend>Assujetti à Séléctionner</legend>
+                <pre>Nom ou Raison Sociale : @Request.Params["nom"]</pre>               
+                <pre>Téléphone             : @Request.Params["tel"]</pre>
+                <pre>Ville                 : @Request.Params["ville"]</pre>
+                <pre>Quartier              : @Request.Params["quartier"]</pre>
+                <pre>Avenue                : @Request.Params["avenue"]</pre>
+                <pre>Numéro                : @Request.Params["numero"]</pre>
+            </fieldset>
+          <h3 style="text-align:center">Sélectionner L'assujetti</h3>
+          
+          <table class="table table-border" border="1">
+              <tr>
+                  <th class="td">N°</th>
+                  <th class="td">Id</th>
+                  <th class="td">Nom ou Raison Social</th>
+                  <th class="td">Sigle</th>
+                  <th class="td">Numéro IdNat</th>
+                  <th class="td">Numéro Impôt DGI</th>
+                  <th class="td">Email</th>
+                  <th class="td">BP</th>
+                  <th class="td">Province</th>
+                  <th class="td">Ville</th>
+                  <th class="td">Commune</th>
+                  <th class="td">Quartier</th>
+                  <th class="td">Avenue</th>
+                  <th class="td">Numéro</th>
+              </tr>
+              @{Liste assujetti = new Liste();}
+              @foreach (Person ass in assujetti.lstAssujettiNS(@Request.Params["nom"]))
+              {
+                     <tr style="font-size:1em">
+                         <td class="td" >@ass.nbre</td>
+                         <td class="td" >@ass.Id_person</td>
+                         <td class="td" ><a href="/Migration/NotePerception?idPersAS=@Request.Params["idPersAS"]&idPersNS=@ass.Id_person&nom=@ass.name&tel=@ass.telephone&ville=@ass.town_dist&quartier=@ass.quarter&avenue=@ass.avenue&numero=@ass.number">@ass.name</a></td>
+                         <td class="td" >@ass.initials</td>
+                         <td class="td" >@ass.numid_nat</td>
+                         <td class="td" >@ass.tax_num_dgi</td>  
+                         <td class="td" >@ass.email</td> 
+                         <td class="td" >@ass.p_o_box</td> 
+                         <td class="td" >@ass.province</td>  
+                         <td class="td" >@ass.town_dist</td> 
+                         <td class="td" >@ass.commune</td>
+                         <td class="td" >@ass.quarter</td>
+                         <td class="td" >@ass.avenue</td>  
+                         <td class="td" >@ass.number</td>                                                     
+                     </tr>
+              }
+          </table>
+
+            <a href="#" class="Bouton btn-success">Nouveau Assujetti</a>
+        </div>
+    }
+    catch (Exception ex)
+    {
+        <script type="text/javascript">alert ('@ex.Message');</script>
+    }
+</body>
+</html>
