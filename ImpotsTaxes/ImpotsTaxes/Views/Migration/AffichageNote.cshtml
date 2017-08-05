@@ -91,9 +91,9 @@
 
                         <tr>
                             <td>- Acte generateur(libelle):</td>
-                            <td class="filltext"><input type="text" value="@notePerc.tax_name" style="width:400px;" /></td>
+                            <td class="filltext">@notePerc.tax_name</td>
                             <td>P/C:</td>
-                            <td><Textarea></Textarea></td>
+                            <td><Textarea name="P/C"></Textarea></td>
                         </tr>
 
                         <tr>
@@ -112,28 +112,30 @@
 
                         <tr>
                             <td>- Taux et reference du texte:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.text_reference" style="width:400px;" /></td>
+                            <td class="filltext"><input type="text" value="@notePerc.text_reference" style="width:200px;" /></td>
                             <td>Quartier:</td>
                             <td class="filltext">@notePerc.adresse.quarter_sect</td>
                         </tr>
 
                         <tr>
                             <td>- Montant à payer:-en chiffres:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.amount @notePerc.currency" style="width:150px;" /></td>
+                            <td class="filltext"><input type="text" value="@notePerc.amount" style="width:200px;" /> 
+                                <select><option>USD</option><option>FC</option></select>
+                               
                             <td>Avenue:</td>
                             <td class="filltext">@notePerc.adresse.avenue_loc</td>
                         </tr>
 
                         <tr>
                             <td>- En lettres:</td>
-                            <td><Textarea></Textarea></td>
+                            <td><Textarea name=""></Textarea></td>
                             <td>Num:</td>
                             <td class="filltext">@notePerc.adresse.number</td>
                         </tr>
 
                         <tr>
                             <td>Nom de l'agent taxateur:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.taxman_name" style="width:400px;" /></td>
+                            <td class="filltext"><input type="text" value="@notePerc.taxman_name" style="width:200px;" /></td>
                             <td>B.P:</td>
                             <td class="filltext">@notePerc.taxPayer.p_o_box</td>
                         </tr>
@@ -150,7 +152,8 @@
                             <td class="filltext"><input type="text" value=" " style="width:150px;" /><a href="#">Rechercher</a></td>
                             <td>E-mail:</td>
                             <td class="filltext">@notePerc.taxPayer.email</td>
-                            <textArea></textArea>
+                            <tr><td></td><td></td><td>Autres précisions</td>
+                            <td><textArea name="AutresPrecisions"></textArea></td></tr>
                         </tr>
                     </table>
                 </fieldset>
@@ -170,12 +173,13 @@
 
 	                <tr>
                         <td>Montant en chiffre</td>
-		                <td class="filltext"><input type="text" value="@notePerc.amount_validation" style="width:150px;" /> <input type="text" value="@notePerc.currency_validation" style="width:100px;" /></td>
+                        <td class="filltext"><input type="text" value="@notePerc.amount_validation" style="width:150px;" /> 
+                                <select><option>USD</option><option>FC</option></select>
 	                </tr>
 				
 				    <tr>
                         <td>Montant en lettre</td>
-					   SIWA1234
+					    <td><textarea name="MontantEnLettre"></textarea></td>
 				    </tr>
                         <tr>
                         <td>Ordonnateur</td>
@@ -239,7 +243,8 @@
 
 				        <tr>
                             <td>Monnaie</td>
-					        <td class="filltext"><input type="text" value="@notePerc.currency_payment" style="width:150px;" /></td>
+                             <td><select><option>USD</option><option>FC</option></select></td>
+					        
 				        </tr>
 
 				        <tr>
@@ -250,8 +255,8 @@
                         <tr>
                             <td>Comptable</td>
 					        <td class="filltext"><input type="text" value="@notePerc.discharger" style="width:200px;" /></td>
-                            <td>IdComptable:</td>
-                            <td class="filltext"><input type="text" value=" " style="width:150px;" /><a href="#">Rechercher</a></td>
+                            <tr><td>IdComptable:</td>
+                            <td class="filltext"><input type="text" value=" " style="width:150px;" /><a href="#">Rechercher</a></td></tr>
 				        </tr>	             
                      </table>
                     </fieldset>
