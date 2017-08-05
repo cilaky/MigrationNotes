@@ -187,6 +187,72 @@ namespace ImpotsTaxes.Models
             return lst;
         }
 
+        //CREATION DE LA LISTE DE CENTRE POUR COMPTE
+        //=============================
+        private List<string> lstcentre()
+        {
+            List<string> lstcentre = new List<string>();
+            ConnectionDB con = new ConnectionDB(1);
+            DataTable dtt = con.Data_Source("SELECT DesignCentre FROM tCentre", "tCentre");
+            for (int i = 0; i < dtt.Rows.Count; i++)
+            {
+                lstcentre.Add(dtt.Rows[i]["DesignCentre"].ToString());
+            }
+            return lstcentre;
+        }
+        //CREATION DE LA LISTE DE CENTRE/ANTENNE
+        //=============================
+        private List<string> lstAnteCentre()
+        {
+            List<string> lstAnteCentre = new List<string>();
+            ConnectionDB con = new ConnectionDB(1);
+            DataTable dtt = con.Data_Source("SELECT tAntenne.Designation   FROM  tCentre INNER JOIN tAntenne ON tCentre.IdCentre = tAntenne.IdCentree", "tCentre");
+            for (int i = 0; i < dtt.Rows.Count; i++)
+            {
+                lstAnteCentre.Add(dtt.Rows[i]["Designation"].ToString());
+            }
+            return lstAnteCentre;
+        }
+        
+        //CREATION DE LA LISTE ARTICLE
+        //=============================
+        private List<string> lstarticle()
+        {
+            List<string> lstarticle = new List<string>();
+            ConnectionDB conn = new ConnectionDB(1);
+            DataTable dtt = conn.Data_Source("SELECT IdArticle FROM tArticleBudjetaire", "tArticleBudjetaire");
+            for (int i = 0; i < dtt.Rows.Count; i++)
+            {
+                lstarticle.Add(dtt.Rows[i]["IdArticle"].ToString());
+            }
+            return lstarticle;
+        }
+        //CREATION DE LA LISTE LIBELLE
+        //=============================
+        private List<string> lstLibelleA()
+        {
+            List<string> lstLibelleA = new List<string>();
+            ConnectionDB conn = new ConnectionDB(1);
+            DataTable dtt = conn.Data_Source("SELECT LibelleArticle FROM tArticleBudjetaire", "tArticleBudjetaire");
+            for (int i = 0; i < dtt.Rows.Count; i++)
+            {
+                lstLibelleA.Add(dtt.Rows[i]["LibelleArticle"].ToString());
+            }
+            return lstLibelleA;
+        }
+        //CREATION DE LA LISTE AGENT
+        //=============================
+        public List<string> lstutilisateur(string id)
+        {
+            List<string> lstutilisateur = new List<string>();
+            ConnectionDB conn = new ConnectionDB(1);
+           DataTable dtt = conn.Data_Source("SELECT Nom + ' ' + PostNom + ' ' + Prenom as utilisateur worker FROM tAgent WHERE IdAgent='" + id + "' ", "tAgent");
+            for (int i = 0; i < dtt.Rows.Count; i++)
+            {
+                lstutilisateur.Add(dtt.Rows[i]["utilisateur"].ToString());
+            }
+            return lstutilisateur;
+        }
 
     }
 }
