@@ -1,0 +1,40 @@
+﻿@using ImpotsTaxes.Models;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Article</title>
+</head>
+<body>
+     <Form action="/Migration/Article">
+    <div>
+        <table border="1">
+         <tr> 
+
+            <th>Article</th>
+            <th>Libelle</th>
+            <th>Fait Générateur</th>
+            <th>Périodicité</th>
+         </tr>
+         <tr>
+  @foreach (Tax Article in ViewBag.Article)
+   {
+     <tr>
+      <td>@Article.tax_id<a href="/Migration/AffichageNote?tax_id=@Article.tax_id">tax_id</a></td>
+      <td class="td" ><a href="/Migration/AffichageNote?note=012496&idPersAS=D-1001701&idPersNS=4111036389&nom=HABAMUNGU RUYENZI Adrien&tel=&ville=Goma&quartier=Lac Vert&avenue=kimbanghiste&numero=-">HABAMUNGU     RUYENZI  Adrien</a></td>
+      <td>@Article.tax_name</td>
+      <td>@Article.generating_fact</td>
+      <td>@Article.periodicity</td>
+  </tr>
+}
+      
+        </table>
+    </div>
+  </Form>
+</body>
+</html>

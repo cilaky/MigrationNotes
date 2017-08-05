@@ -1,0 +1,43 @@
+﻿@using ImpotsTaxes.Models;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>RechercherPerson</title>
+</head>
+<body>
+    <form>
+    <div>
+        <table border="1">
+         <tr> 
+
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Post_nom</th>
+            <th>Prénom</th>
+            <th>Telephone</th>
+            <th>Entite</th>
+         </tr>
+         
+  @foreach (Person agent in ViewBag.agent)
+   {
+     <tr>
+      <td>@agent.Id_person</td>
+      <td>@agent.name</td>
+      <td>@agent.last_name</td>
+      <td>@agent.nick_name</td>
+      <td>@agent.telephone</td>
+      <td>@agent.entite</td>
+  </tr>
+}
+      
+        </table>
+    </div>
+  </form>
+</body>
+</html>

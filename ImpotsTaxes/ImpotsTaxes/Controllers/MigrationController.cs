@@ -158,7 +158,8 @@ namespace ImpotsTaxes.Controllers
             EnregistrerMig(Request.Form["note"], Request.Form["Action"], Request.Form["User"], Request.Form["Observation"]);
             return View();
         }
-
+        //methode enregistrement
+        //====================================
         private void EnregistrerMig(String IdNote,String Action,String User_id,String Observation)
         {
             ConnectionDB con=new ConnectionDB(1);
@@ -180,41 +181,72 @@ namespace ImpotsTaxes.Controllers
                                 ")"
                                 );
         }
+        //liste article
+        //====================================
         public ActionResult Article()
         {
             ConnectionDB con = new ConnectionDB(2);
-            DataTable dtt = con.Data_Source("SELECT tax_id, tax_name, generating_fact, periodicity FROM  tax", "tax");
-            
-           /* Tax
+            DataTable dtt = con.Data_Source("SELECT"+ 
+                                            " tax_id,"+
+                                            "tax_name,"+
+                                            "generating_fact,"+
+                                            "periodicity "+
+                                            "FROM "+
+                                            "tax","tax");
+
+
+            List<Tax> lstArticle = new List<Tax>();
             for (int i = 0; i < dtt.Rows.Count; i++)
             {
-                lstArticle.Add(dtt.Rows[i]["tax_id"].ToString());
-                lstArticle.Add(dtt.Rows[i]["tax_name"].ToString());
-                lstArticle.Add(dtt.Rows[i]["generating_fact"].ToString());
-                lstArticle.Add(dtt.Rows[i]["periodicity"].ToString());
+                lstArticle.Add(new Tax()
+                {
+                    tax_id = dtt.Rows[i]["tax_id"].ToString(),
+                    tax_name = dtt.Rows[i]["tax_name"].ToString(),
+                    generating_fact = dtt.Rows[i]["generating_fact"].ToString(),
+                    periodicity = dtt.Rows[i]["periodicity"].ToString(),
+                    
+                });
             }
-            return lstArticle;
+            ViewBag.Article = lstArticle;
 
-        }*/
          return View();
         }
-
-       /* public List<string> lstArticle()
+        //liste personne
+        //====================================
+        public ActionResult RechercherPerson()
         {
-            List<string> lstArticle = new List<string>();
             ConnectionDB con = new ConnectionDB(2);
-            DataTable dtt = con.Data_Source("SELECT tax_id, tax_name, generating_fact, periodicity FROM  tax", "tax");
-            
+            DataTable dtt = con.Data_Source("SELECT "+ 
+                                             "dbo.physical_person.id,"+
+                                             "dbo.physical_person.name,"+
+                                             "dbo.physical_person.last_name,"+
+                                             "dbo.physical_person.nick_name,"+
+                                             "dbo.telephone.tel_number,"+
+                                             "dbo.fiscal_entity.entity_name "+
+                                             "FROM "+
+                                             "dbo.person "+ 
+                                             "INNER JOIN  dbo.physical_person ON dbo.person.id = dbo.physical_person.id "+ 
+                                             "INNER JOIN  dbo.telephone ON dbo.person.id = dbo.telephone.id "+
+                                             "INNER JOIN  dbo.fiscal_entity ON dbo.physical_person.id = dbo.fiscal_entity.chief", "physical_person");
+
+
+            List<Person> lstPerson = new List<Person>();
             for (int i = 0; i < dtt.Rows.Count; i++)
             {
-                lstArticle.Add(dtt.Rows[i]["tax_id"].ToString());
-                lstArticle.Add(dtt.Rows[i]["tax_name"].ToString());
-                lstArticle.Add(dtt.Rows[i]["generating_fact"].ToString());
-                lstArticle.Add(dtt.Rows[i]["periodicity"].ToString());
+                lstPerson.Add(new Person()
+                {
+                    Id_person = dtt.Rows[i]["id"].ToString(),
+                    name = dtt.Rows[i]["name"].ToString(),
+                    last_name = dtt.Rows[i]["last_name"].ToString(),
+                    nick_name = dtt.Rows[i]["nick_name"].ToString(),
+                    telephone = dtt.Rows[i]["tel_number"].ToString(),
+                    entite = dtt.Rows[i]["entity_name"].ToString(),
+                });
             }
-            return lstArticle;
+            ViewBag.agent = lstPerson;
 
-        }*/
+            return View();
+        }
 
     }
 
