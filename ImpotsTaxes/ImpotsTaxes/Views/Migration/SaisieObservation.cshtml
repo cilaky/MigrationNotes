@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>SaisieObservation</title>
+</head>
+<body>
+    <form method="post" action="/Migration/SaisieObservation">
+    <div>
+        <fieldset>
+            <legend>Saisie</legend>
+            <input type="hidden" id="note" name="note" value="@Request.Params["note"]"/>
+            <input type="hidden" id="Action" name="Action" value="@Request.Params["action"]"/>
+            <input type="text" id="User" name="User"/>
+             <table>
+              <tr>
+                  <td>Observation</td>
+                  <td><Textarea name="Observation"></Textarea></td>
+              </tr>
+             <tr>
+                 <td></td>
+                 <td><input type="submit" id="Envoyer" name="Envoyer" value="Envoyer"/> </td>
+            </tr>
+          </table>
+        </fieldset>
+    </div>
+  </form>
+</body>
+</html>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ImpotsTaxes.Models;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace ImpotsTaxes.Controllers
 {
@@ -145,10 +146,76 @@ namespace ImpotsTaxes.Controllers
             ViewBag.note = ass;
             return View();
         }
-
-        public ActionResult Migrer()
+                        
+        public ActionResult SaisieObservation()
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult SaisieObservation(string note)
+        {
+            EnregistrerMig(Request.Form["note"], Request.Form["Action"], Request.Form["User"], Request.Form["Observation"]);
+            return View();
+        }
+
+        private void EnregistrerMig(String IdNote,String Action,String User_id,String Observation)
+        {
+            ConnectionDB con=new ConnectionDB(1);
+            con.Execute_Query("INSERT INTO tNoteMigree "+
+                                "("+
+                                "IdNote,"+
+                                "actionNote,"+
+                                "user_id,"+
+                                "saving_date,"+
+                                "observation"+
+                                ")"+
+                                "VALUES"+
+                                "("+
+                                "'" + IdNote + "',"+
+                                "'" + Action + "',"+
+                                "'" + User_id + "',"+
+                                "'" + DateTime.UtcNow.AddHours(2) + "',"+
+                                "'" + Observation + "'"+
+                                ")"
+                                );
+        }
+        public ActionResult Article()
+        {
+            ConnectionDB con = new ConnectionDB(2);
+            DataTable dtt = con.Data_Source("SELECT tax_id, tax_name, generating_fact, periodicity FROM  tax", "tax");
+            
+           /* Tax
+            for (int i = 0; i < dtt.Rows.Count; i++)
+            {
+                lstArticle.Add(dtt.Rows[i]["tax_id"].ToString());
+                lstArticle.Add(dtt.Rows[i]["tax_name"].ToString());
+                lstArticle.Add(dtt.Rows[i]["generating_fact"].ToString());
+                lstArticle.Add(dtt.Rows[i]["periodicity"].ToString());
+            }
+            return lstArticle;
+
+        }*/
+         return View();
+        }
+
+       /* public List<string> lstArticle()
+        {
+            List<string> lstArticle = new List<string>();
+            ConnectionDB con = new ConnectionDB(2);
+            DataTable dtt = con.Data_Source("SELECT tax_id, tax_name, generating_fact, periodicity FROM  tax", "tax");
+            
+            for (int i = 0; i < dtt.Rows.Count; i++)
+            {
+                lstArticle.Add(dtt.Rows[i]["tax_id"].ToString());
+                lstArticle.Add(dtt.Rows[i]["tax_name"].ToString());
+                lstArticle.Add(dtt.Rows[i]["generating_fact"].ToString());
+                lstArticle.Add(dtt.Rows[i]["periodicity"].ToString());
+            }
+            return lstArticle;
+
+        }*/
+
     }
+
 }
