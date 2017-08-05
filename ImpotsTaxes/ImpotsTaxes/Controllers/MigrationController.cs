@@ -217,17 +217,20 @@ namespace ImpotsTaxes.Controllers
         {
             ConnectionDB con = new ConnectionDB(2);
             DataTable dtt = con.Data_Source("SELECT "+ 
-                                             "dbo.physical_person.id,"+
-                                             "dbo.physical_person.name,"+
-                                             "dbo.physical_person.last_name,"+
-                                             "dbo.physical_person.nick_name,"+
-                                             "dbo.telephone.tel_number,"+
-                                             "dbo.fiscal_entity.entity_name "+
+                                             "physical_person.id,"+
+                                             "physical_person.name,"+
+                                             "physical_person.last_name,"+
+                                             "physical_person.nick_name,"+
+                                             "telephone.tel_number,"+
+                                             "fiscal_entity.entity_name "+
+                                             "worker.function_desc,"+
+                                             "worker.grade_id "+ 
                                              "FROM "+
-                                             "dbo.person "+ 
-                                             "INNER JOIN  dbo.physical_person ON dbo.person.id = dbo.physical_person.id "+ 
-                                             "INNER JOIN  dbo.telephone ON dbo.person.id = dbo.telephone.id "+
-                                             "INNER JOIN  dbo.fiscal_entity ON dbo.physical_person.id = dbo.fiscal_entity.chief", "physical_person");
+                                             "person "+ 
+                                             "INNER JOIN  physical_person ON person.id =physical_person.id "+ 
+                                             "INNER JOIN  telephone ON person.id = telephone.id "+
+                                             "INNER JOIN  fiscal_entity ON physical_person.id = fiscal_entity.chief"+
+                                             "INNER JOIN  worker ON physical_person.id = worker.id" , "physical_person");
 
 
             List<Person> lstPerson = new List<Person>();
