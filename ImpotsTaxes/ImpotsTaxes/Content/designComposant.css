@@ -1,0 +1,32 @@
+﻿body {
+}
+
+input[type*="text"],input[type*="password"],select,textarea 
+{
+    width:350px;
+    font-size:20px;
+}
+
+input[type*="submit"],button
+{
+    width:300px;
+    font-size:24px;
+    cursor:pointer;
+    background-color:lightsteelblue;
+    border:dotted 2px green;
+    border-radius:5px;
+}
+
+.bouton {
+    width:300px;
+    font-size:24px;
+    cursor:pointer;
+    background-color:lightsteelblue;
+    border:dotted 2px green;
+    border-radius:5px;
+}
+
+.titre {
+    text-align:center;
+    background-color: graytext;
+}
