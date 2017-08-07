@@ -27,7 +27,19 @@
   @foreach (Person agent in ViewBag.agent)
    {
      <tr>
-      <td>@agent.Id_person</td>
+         @switch (Request.Params["action"])
+         {
+             case "taxateur":
+                 <td><a href="/Migration/AffichageNote?note=@Request.Params["note"]&idPersAS=@Request.Params["idPersAS"]&idPersNS=@Request.Params["idPersNS"]&nom=@Request.Params["nom"]&tel=@Request.Params["tel"]&ville=@Request.Params["ville"]&quartier=@Request.Params["quartier"]&avenue=@Request.Params["avenue"]&numero=@Request.Params["numero"]&article=@Request.Params["article"]&taxateur=@agent.Id_person&ordonnateur=@Request.Params["ordonnateur"]&comptable=@Request.Params["comptable"]">@agent.Id_person</a></td>
+                 break;
+             case "ordonnateur":
+                <td><a href="/Migration/AffichageNote?note=@Request.Params["note"]&idPersAS=@Request.Params["idPersAS"]&idPersNS=@Request.Params["idPersNS"]&nom=@Request.Params["nom"]&tel=@Request.Params["tel"]&ville=@Request.Params["ville"]&quartier=@Request.Params["quartier"]&avenue=@Request.Params["avenue"]&numero=@Request.Params["numero"]&article=@Request.Params["article"]&taxateur=@Request.Params["taxateur"]&ordonnateur=@agent.Id_person&comptable=@Request.Params["comptable"]">@agent.Id_person</a></td>
+                 break;
+             case "comptable":
+                <td><a href="/Migration/AffichageNote?note=@Request.Params["note"]&idPersAS=@Request.Params["idPersAS"]&idPersNS=@Request.Params["idPersNS"]&nom=@Request.Params["nom"]&tel=@Request.Params["tel"]&ville=@Request.Params["ville"]&quartier=@Request.Params["quartier"]&avenue=@Request.Params["avenue"]&numero=@Request.Params["numero"]&article=@Request.Params["article"]&taxateur=@Request.Params["taxateur"]&ordonnateur=@Request.Params["ordonnateur"]&comptable=@agent.Id_person">@agent.Id_person</a></td>
+                 break;
+         }
+      
       <td>@agent.name</td>
       <td>@agent.last_name</td>
       <td>@agent.nick_name</td>

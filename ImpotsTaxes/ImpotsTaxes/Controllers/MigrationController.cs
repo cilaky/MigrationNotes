@@ -98,6 +98,18 @@ namespace ImpotsTaxes.Controllers
                                     "WHERE " + 
                                     "tNotePercepteur.IdNote = '" + Request.Params["note"] + "' "
                                     , "tax_assessment");
+
+            //Recuperation du libelle de l'article
+            string libelle = "";
+            if(Request.Params["article"]==null)
+                {
+                    libelle=dtt.Rows[0]["tax_name"].ToString();
+                }
+                else
+                {
+                    ConnectionDB conLib = new ConnectionDB(2);
+                    libelle = conLib.Show_Data("select tax_name from tax where tax_id='" + Request.Params["article"] + "'", "tax_name");
+                }
             Assessment ass = new Assessment()
             {
                 assessment_id = dtt.Rows[0]["assessment_id"].ToString(),
@@ -106,7 +118,7 @@ namespace ImpotsTaxes.Controllers
                 taxation_base = dtt.Rows[0]["taxation_base"].ToString(),
                 taxation_base_id = dtt.Rows[0]["taxation_base_id"].ToString(),
                 taxpayer_name = dtt.Rows[0]["PayerName"].ToString(),
-                tax_name = dtt.Rows[0]["tax_name"].ToString(),
+                tax_name = libelle,
                 on_account_of = dtt.Rows[0]["Name_on_account_of"].ToString(),
                 tax_id = dtt.Rows[0]["Tax"].ToString(),
                 adresse = new Adress()
@@ -221,16 +233,16 @@ namespace ImpotsTaxes.Controllers
                                              "physical_person.name,"+
                                              "physical_person.last_name,"+
                                              "physical_person.nick_name,"+
-                                             "telephone.tel_number,"+
-                                             "fiscal_entity.entity_name "+
+                                             "(select top 1 tel_number from telephone where id=physical_person.id) as tel_number," +
+                                             "fiscal_entity.entity_name, "+
                                              "worker.function_desc,"+
                                              "worker.grade_id "+ 
                                              "FROM "+
                                              "person "+ 
-                                             "INNER JOIN  physical_person ON person.id =physical_person.id "+ 
-                                             "INNER JOIN  telephone ON person.id = telephone.id "+
-                                             "INNER JOIN  fiscal_entity ON physical_person.id = fiscal_entity.chief"+
-                                             "INNER JOIN  worker ON physical_person.id = worker.id" , "physical_person");
+                                             "INNER JOIN  physical_person ON person.id =physical_person.id "+
+                                             "INNER JOIN  worker ON physical_person.id = worker.id "+
+                                             "INNER JOIN  fiscal_entity ON fiscal_entity.entity_id = worker.entity_id"
+                                              , "physical_person");
 
 
             List<Person> lstPerson = new List<Person>();
