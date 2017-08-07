@@ -25,12 +25,18 @@
                 // mise en place de l appel de la fonction toutes les 0.8 secondes
                 // Pour arrêter le clignotement : clearInterval(periode);
                 periode = setInterval(clignotement, 800);
+
+                function rechercherAgent(action)
+                {
+                    //alert("OK");
+                    window.location.href = '/Migration/RechercherPerson?note=@notePerc.assessment_id&idPersAS=@Request.Params["idPersAS"]&idPersNS=@Request.Params["idPersNS"]&nom=@Request.Params["nom"]&tel=@Request.Params["tel"]&ville=@Request.Params["ville"]&quartier=@Request.Params["quartier"]&avenue=@Request.Params["avenue"]&numero=@Request.Params["numero"]&article=' + document.getElementById('tax_id').value + '&taxateur=' + document.getElementById('taxateur').value + '&ordonnateur=' + document.getElementById('ordonnateur').value + '&comptable=' + document.getElementById('comptable').value + '&action=' + action;
+                }
             </script>
 
             <script type="text/css">
                 input
                 {
-                    width:3000px;
+                    width:300px;
                 }
             </script>
         </head>
@@ -84,7 +90,7 @@
                         
                         <tr>
                             <td>- Note de debit ou de taxation Num:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.taxation_base" style="width:150px;" /> N°:<input type="text" value="@notePerc.taxation_base_id" style="width:150px;" /></td>
+                            <td class="filltext"><input type="text" value="@notePerc.taxation_base" style="width:150px;" /> N°:<input type="text" value="@notePerc.taxation_base_id" style="width:80px;" /></td>
                             <td> Nom ou raison sociale:</td>
                             <td class="filltext">@notePerc.taxpayer_name</td>
                         </tr>
@@ -98,7 +104,20 @@
 
                         <tr>
                             <td>- Article budgetaire:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.tax_id" style="width:150px;" /><a href="#">Modifier l'article</a></td>
+                            <td class="filltext">
+                                @{string taxId="";}
+                                @if(Request.Params["article"]==null)
+                                {
+                                    taxId = notePerc.tax_id;                                    
+                                }
+                                else
+                                {
+                                    taxId = Request.Params["article"];
+                                }
+                                <input type="text" value="@taxId"  id="tax_id" name="tax_id" style="width:150px;" />
+
+                                <a href="/Migration/Article?note=@notePerc.assessment_id&idPersAS=@Request.Params["idPersAS"]&idPersNS=@Request.Params["idPersNS"]&nom=@Request.Params["nom"]&tel=@Request.Params["tel"]&ville=@Request.Params["ville"]&quartier=@Request.Params["quartier"]&avenue=@Request.Params["avenue"]&numero=@Request.Params["numero"]" class="bouton">Modifier l'article</a>
+                            </td>
                             <td>Ville:</td>
                             <td class="filltext">@notePerc.adresse.town_dist</td>
                         </tr> 
@@ -112,7 +131,7 @@
 
                         <tr>
                             <td>- Taux et reference du texte:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.text_reference" style="width:200px;" /></td>
+                            <td class="filltext"><input type="text" value="@notePerc.text_reference" /></td>
                             <td>Quartier:</td>
                             <td class="filltext">@notePerc.adresse.quarter_sect</td>
                         </tr>
@@ -120,7 +139,7 @@
                         <tr>
                             <td>- Montant à payer:-en chiffres:</td>
                             <td class="filltext"><input type="text" value="@notePerc.amount" style="width:200px;" /> 
-                                <select><option>USD</option><option>FC</option></select>
+                                <select style="width:100px;"><option>USD</option><option>FC</option></select>
                                
                             <td>Avenue:</td>
                             <td class="filltext">@notePerc.adresse.avenue_loc</td>
@@ -135,7 +154,7 @@
 
                         <tr>
                             <td>Nom de l'agent taxateur:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.taxman_name" style="width:200px;" /></td>
+                            <td class="filltext"><input type="text" value="@notePerc.taxman_name" /></td>
                             <td>B.P:</td>
                             <td class="filltext">@notePerc.taxPayer.p_o_box</td>
                         </tr>
@@ -148,12 +167,18 @@
                         </tr>
 
                         <tr>
-                            <td>IdOrdonnateur:</td>
-                            <td class="filltext"><input type="text" value=" " style="width:150px;" /><a href="#">Rechercher</a></td>
+                            <td>Id Taxateur:</td>
+                            <td class="filltext"><input type="text" value="@Request.Params["taxateur"]" style="width:150px;" id="taxateur"/>
+                             <span class="bouton" onclick="rechercherAgent('taxateur');">Rechercher</span>   
+                                @*<a href="/Migration/RechercherPerson?note=@notePerc.assessment_id&idPersAS=@Request.Params["idPersAS"]&idPersNS=@Request.Params["idPersNS"]&nom=@Request.Params["nom"]&tel=@Request.Params["tel"]&ville=@Request.Params["ville"]&quartier=@Request.Params["quartier"]&avenue=@Request.Params["avenue"]&numero=@Request.Params["numero"]&article=" class="bouton">Rechercher</a>*@</td>
                             <td>E-mail:</td>
                             <td class="filltext">@notePerc.taxPayer.email</td>
-                            <tr><td></td><td></td><td>Autres précisions</td>
-                            <td><textArea name="AutresPrecisions"></textArea></td></tr>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>Autres précisions</td>
+                            <td><textArea name="AutresPrecisions"></textArea></td>
                         </tr>
                     </table>
                 </fieldset>
@@ -163,28 +188,37 @@
                     <table> 
                         <tr>
                         <td>Date d'ordonnancement</td>
-                        <td class="filltext"><input type="text" value="@notePerc.validation_date" style="width:400px;" /></td>
+                        <td class="filltext"><input type="text" value="@notePerc.validation_date" /></td>
                         </tr>
 
 	                <tr>
                         <td>Avis motivé de l'ordonnateur</td>
-	                    <td class="filltext"><input type="text" value="@notePerc.notice" style="width:400px;" /></td>
+	                    <td class="filltext"><input type="text" value="@notePerc.notice" /></td>
 	                </tr>
 
 	                <tr>
                         <td>Montant en chiffre</td>
                         <td class="filltext"><input type="text" value="@notePerc.amount_validation" style="width:150px;" /> 
-                                <select><option>USD</option><option>FC</option></select>
+                                <select style="width:150px;">
+                                    <option>USD</option>
+                                    <option>FC</option>
+                                </select>
 	                </tr>
 				
 				    <tr>
                         <td>Montant en lettre</td>
 					    <td><textarea name="MontantEnLettre"></textarea></td>
 				    </tr>
-                        <tr>
+                    <tr>
                         <td>Ordonnateur</td>
-					    <td class="filltext"><input type="text" value="@notePerc.validator_name" style="width:400px;" /></td>
-				    </tr>	             
+					    <td class="filltext"><input type="text" value="@notePerc.validator_name" /></td>
+				    </tr>
+                    <tr>
+                        <td>Id Ordinnateur:</td>
+                        <td class="filltext">
+                            <input type="text" id="ordonnateur" value="@Request.Params["ordonnateur"]" style="width:150px;" />
+                            <span class="bouton" onclick="rechercherAgent('ordonnateur');">Rechercher</span> 
+                    </tr>	             
                     </table> 
                 </fieldset>  
             
@@ -218,32 +252,37 @@
                   <table> 
                         <tr>
                             <td>Date d'apurement</td>
-                            <td class="filltext"><input type="text" value="@date_apurement" style="width:400px;" /></td>
+                            <td class="filltext"><input type="text" value="@date_apurement" /></td>
                         </tr>
 
 	                    <tr>
                             <td>Banque</td>
-	                        <td class="filltext"><input type="text" value="@notePerc.bank" style="width:400px;" /></td>
+	                        <td class="filltext"><input type="text" value="@notePerc.bank" /></td>
 	                     </tr>
 
 	                     <tr>
                              <td>Numero du Bordereau</td>
-	                         <td class="filltext"><input type="text" value="@notePerc.receipt_number" style="width:400px;" /></td>
+	                         <td class="filltext"><input type="text" value="@notePerc.receipt_number" /></td>
 	                     </tr>
 
                         <tr>
                              <td>Date</td>
-	                         <td class="filltext"><input type="text" value="@date_bordereau" style="width:400px;" /></td>
+	                         <td class="filltext"><input type="text" value="@date_bordereau" /></td>
 	                     </tr>
 
 	                    <tr>
                             <td>Montant</td>
-		                    <td class="filltext"><input type="text" value="@montant_paiement" style="width:150px;" /></td>
+		                    <td class="filltext"><input type="text" value="@montant_paiement" /></td>
 	                    </tr>
 
 				        <tr>
                             <td>Monnaie</td>
-                             <td><select><option>USD</option><option>FC</option></select></td>
+                             <td>
+                                 <select>
+                                     <option>USD</option>
+                                     <option>FC</option>
+                                 </select>
+                             </td>
 					        
 				        </tr>
 
@@ -254,9 +293,13 @@
                   
                         <tr>
                             <td>Comptable</td>
-					        <td class="filltext"><input type="text" value="@notePerc.discharger" style="width:200px;" /></td>
-                            <tr><td>IdComptable:</td>
-                            <td class="filltext"><input type="text" value=" " style="width:150px;" /><a href="#">Rechercher</a></td></tr>
+					        <td class="filltext"><input type="text" value="@notePerc.discharger" /></td>
+                        </tr>
+                        <tr>
+                            <td>IdComptable:</td>
+                            <td class="filltext">
+                                <input type="text" value="@Request.Params["comptable"]" style="width:150px;" id="comptable" />
+                                <span class="bouton" onclick="rechercherAgent('comptable');">Rechercher</span> 
 				        </tr>	             
                      </table>
                     </fieldset>
