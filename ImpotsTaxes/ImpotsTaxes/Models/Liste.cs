@@ -192,11 +192,11 @@ namespace ImpotsTaxes.Models
         private List<string> lstcentre()
         {
             List<string> lstcentre = new List<string>();
-            ConnectionDB con = new ConnectionDB(1);
-            DataTable dtt = con.Data_Source("SELECT DesignCentre FROM tCentre", "tCentre");
+            ConnectionDB con = new ConnectionDB(2);
+            DataTable dtt = con.Data_Source("SELECT entity_name FROM fiscal_entity", "fiscal_entity");
             for (int i = 0; i < dtt.Rows.Count; i++)
             {
-                lstcentre.Add(dtt.Rows[i]["DesignCentre"].ToString());
+                lstcentre.Add(dtt.Rows[i]["entity_name"].ToString());
             }
             return lstcentre;
         }
@@ -205,11 +205,11 @@ namespace ImpotsTaxes.Models
         private List<string> lstAnteCentre()
         {
             List<string> lstAnteCentre = new List<string>();
-            ConnectionDB con = new ConnectionDB(1);
-            DataTable dtt = con.Data_Source("SELECT tAntenne.Designation   FROM  tCentre INNER JOIN tAntenne ON tCentre.IdCentre = tAntenne.IdCentree", "tCentre");
+            ConnectionDB con = new ConnectionDB(2);
+            DataTable dtt = con.Data_Source("SELECT entity_name FROM fiscal_entity", "fiscal_entity");
             for (int i = 0; i < dtt.Rows.Count; i++)
             {
-                lstAnteCentre.Add(dtt.Rows[i]["Designation"].ToString());
+                lstAnteCentre.Add(dtt.Rows[i]["entity_name"].ToString());
             }
             return lstAnteCentre;
         }
@@ -219,11 +219,11 @@ namespace ImpotsTaxes.Models
         private List<string> lstarticle()
         {
             List<string> lstarticle = new List<string>();
-            ConnectionDB conn = new ConnectionDB(1);
-            DataTable dtt = conn.Data_Source("SELECT IdArticle FROM tArticleBudjetaire", "tArticleBudjetaire");
+            ConnectionDB conn = new ConnectionDB(2);
+            DataTable dtt = conn.Data_Source("SELECT tax_id FROM tax", "tax");
             for (int i = 0; i < dtt.Rows.Count; i++)
             {
-                lstarticle.Add(dtt.Rows[i]["IdArticle"].ToString());
+                lstarticle.Add(dtt.Rows[i]["tax_id"].ToString());
             }
             return lstarticle;
         }
@@ -232,11 +232,11 @@ namespace ImpotsTaxes.Models
         private List<string> lstLibelleA()
         {
             List<string> lstLibelleA = new List<string>();
-            ConnectionDB conn = new ConnectionDB(1);
-            DataTable dtt = conn.Data_Source("SELECT LibelleArticle FROM tArticleBudjetaire", "tArticleBudjetaire");
+            ConnectionDB conn = new ConnectionDB(2);
+            DataTable dtt = conn.Data_Source("SELECT tax_name FROM tax", "tax");
             for (int i = 0; i < dtt.Rows.Count; i++)
             {
-                lstLibelleA.Add(dtt.Rows[i]["LibelleArticle"].ToString());
+                lstLibelleA.Add(dtt.Rows[i]["tax_name"].ToString());
             }
             return lstLibelleA;
         }
@@ -246,10 +246,13 @@ namespace ImpotsTaxes.Models
         {
             List<string> lstutilisateur = new List<string>();
             ConnectionDB conn = new ConnectionDB(1);
-           DataTable dtt = conn.Data_Source("SELECT Nom + ' ' + PostNom + ' ' + Prenom as utilisateur worker FROM tAgent WHERE IdAgent='" + id + "' ", "tAgent");
+            DataTable dtt = conn.Data_Source("SELECT  physical_person.name + ' ' + physical_person.last_name + ' ' + physical_person.nick_name as Worker FROM person INNER JOIN physical_person ON person.id = physical_person.id INNER JOIN worker ON physical_person.id = worker.id WHERE id=worker.id", "tAgent");
+            
+            
+            
             for (int i = 0; i < dtt.Rows.Count; i++)
             {
-                lstutilisateur.Add(dtt.Rows[i]["utilisateur"].ToString());
+                lstutilisateur.Add(dtt.Rows[i]["Worker"].ToString());
             }
             return lstutilisateur;
         }
