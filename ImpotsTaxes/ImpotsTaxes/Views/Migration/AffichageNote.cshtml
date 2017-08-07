@@ -59,7 +59,7 @@
                     <tr>
                         <td>SERVICE ou ENTITE FISCAL:</td> 
                         <td class="filltext">
-                            <select>
+                            <select name="entity" id="entity">
                                 <option>@notePerc.entity_name</option>
                             </select>
                         </td>
@@ -67,9 +67,9 @@
                         <td class="filltext"><input type="text" value="@notePerc.assessment_date" /> </td>
                     </tr>
                     <tr>
-                        <td>Entete P/C:</td>
+                        <td>Entité P/C:</td>
                         <td class="filltext">
-                            <select>
+                            <select name="entityPC" id="entityPC" style="width:100px;" required>
                                 <option>@notePerc.entity_name</option>
                             </select>
                         <td>No:</td>
@@ -90,7 +90,7 @@
                         
                         <tr>
                             <td>- Note de debit ou de taxation Num:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.taxation_base" style="width:150px;" /> N°:<input type="text" value="@notePerc.taxation_base_id" style="width:80px;" /></td>
+                            <td class="filltext"><input type="text" value="@notePerc.taxation_base" name="numnoteDebit" id="numnoteDebit" style="width:150px;" /> N°:<input type="text" value="@notePerc.taxation_base_id" style="width:80px;" /></td>
                             <td> Nom ou raison sociale:</td>
                             <td class="filltext">@notePerc.taxpayer_name</td>
                         </tr>
@@ -99,7 +99,7 @@
                             <td>- Acte generateur(libelle):</td>
                             <td class="filltext">@notePerc.tax_name</td>
                             <td>P/C:</td>
-                            <td><Textarea name="P/C"></Textarea></td>
+                            <td><Textarea name="pc" id="pc"></Textarea></td>
                         </tr>
 
                         <tr>
@@ -131,15 +131,15 @@
 
                         <tr>
                             <td>- Taux et reference du texte:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.text_reference" /></td>
+                            <td class="filltext"><input type="text" name="tauxref" id="tauxref" value="@notePerc.text_reference" /></td>
                             <td>Quartier:</td>
                             <td class="filltext">@notePerc.adresse.quarter_sect</td>
                         </tr>
 
                         <tr>
                             <td>- Montant à payer:-en chiffres:</td>
-                            <td class="filltext"><input type="text" value="@notePerc.amount" style="width:200px;" /> 
-                                <select style="width:100px;"><option>USD</option><option>FC</option></select>
+                            <td class="filltext"><input type="text" name="amount" id="amount" value="@notePerc.amount" style="width:200px;" /> 
+                                <select name="currency" id="currency" style="width:100px;" required><option>USD</option><option>FC</option></select>
                                
                             <td>Avenue:</td>
                             <td class="filltext">@notePerc.adresse.avenue_loc</td>
@@ -147,7 +147,7 @@
 
                         <tr>
                             <td>- En lettres:</td>
-                            <td><Textarea name=""></Textarea></td>
+                            <td><Textarea name="in_word" id="in_word"></Textarea></td>
                             <td>Num:</td>
                             <td class="filltext">@notePerc.adresse.number</td>
                         </tr>
@@ -178,7 +178,7 @@
                             <td></td>
                             <td></td>
                             <td>Autres précisions</td>
-                            <td><textArea name="AutresPrecisions"></textArea></td>
+                            <td><textArea name="descipt" id="descipt"></textArea></td>
                         </tr>
                     </table>
                 </fieldset>
@@ -188,18 +188,18 @@
                     <table> 
                         <tr>
                         <td>Date d'ordonnancement</td>
-                        <td class="filltext"><input type="text" value="@notePerc.validation_date" /></td>
+                        <td class="filltext"><input type="text" name="dateOrdo" value="@notePerc.validation_date" /></td>
                         </tr>
 
 	                <tr>
                         <td>Avis motivé de l'ordonnateur</td>
-	                    <td class="filltext"><input type="text" value="@notePerc.notice" /></td>
+	                    <td class="filltext"><input type="text" name="notice" id="notice" value="@notePerc.notice" /></td>
 	                </tr>
 
 	                <tr>
                         <td>Montant en chiffre</td>
-                        <td class="filltext"><input type="text" value="@notePerc.amount_validation" style="width:150px;" /> 
-                                <select style="width:150px;">
+                        <td class="filltext"><input type="text" name="amountOrdo" value="@notePerc.amount_validation" style="width:150px;" /> 
+                                <select name="currenyOrdo" id="currenyOrdo" style="width:150px;">
                                     <option>USD</option>
                                     <option>FC</option>
                                 </select>
@@ -207,7 +207,7 @@
 				
 				    <tr>
                         <td>Montant en lettre</td>
-					    <td><textarea name="MontantEnLettre"></textarea></td>
+					    <td><textarea name="in_wordOrdo" id="in_wordOrdo" style="width:260px;" required></textarea></td>
 				    </tr>
                     <tr>
                         <td>Ordonnateur</td>
@@ -278,7 +278,7 @@
 				        <tr>
                             <td>Monnaie</td>
                              <td>
-                                 <select>
+                                 <select name="">
                                      <option>USD</option>
                                      <option>FC</option>
                                  </select>
